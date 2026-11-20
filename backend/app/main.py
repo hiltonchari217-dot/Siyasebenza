@@ -5,6 +5,7 @@ from fastapi import FastAPI, Depends, HTTPException, status
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
 from sqlalchemy.orm import Session
+from app.demo_accounts import create_demo_accounts
 
 from app.database import Base, engine, get_db
 from app import models
@@ -44,6 +45,12 @@ security = HTTPBearer()
 def create_tables():
     Base.metadata.create_all(bind=engine)
 
+    db = next(get_db())
+
+    try:
+        create_demo_accounts(db)
+    finally:
+        db.close()
 
 @app.get("/")
 def home():
