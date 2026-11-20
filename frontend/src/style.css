@@ -177,3 +177,140 @@ footer {
     gap: 15px;
   }
 }
+
+
+/* KASISKILL DEMO ACCOUNTS */
+
+.demo-section {
+  width: min(900px, 92%);
+  margin: 35px auto;
+  padding: 30px;
+  background: var(--panel, #ffffff);
+  border: 1px solid #e5e7eb;
+  border-radius: 20px;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.04);
+}
+
+.demo-heading {
+  margin-bottom: 24px;
+}
+
+.demo-heading h2 {
+  margin: 8px 0;
+}
+
+.demo-heading p {
+  color: #64748b;
+  line-height: 1.6;
+}
+
+.demo-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.demo-card {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 20px;
+  text-align: left;
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 15px;
+  cursor: pointer;
+  transition: transform 0.2s ease, border-color 0.2s ease,
+    box-shadow 0.2s ease;
+  color: inherit;
+  font: inherit;
+}
+
+.demo-card:hover:not(:disabled) {
+  transform: translateY(-3px);
+  border-color: #16a085;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.07);
+}
+
+.demo-card:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.demo-icon {
+  display: grid;
+  place-items: center;
+  min-width: 50px;
+  height: 50px;
+  border-radius: 13px;
+  background: #e8f5f1;
+  font-size: 25px;
+}
+
+.demo-card-content {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.demo-card-content strong {
+  font-size: 16px;
+}
+
+.demo-card-content small {
+  color: #64748b;
+  line-height: 1.4;
+}
+
+.demo-action {
+  color: #07866f;
+  font-size: 13px;
+  font-weight: 700;
+  margin-top: 4px;
+}
+
+.demo-note {
+  margin-top: 20px;
+  font-size: 12px;
+  color: #64748b;
+}
+
+.auth-message {
+  padding: 12px 15px;
+  margin: 15px 0;
+  border-radius: 9px;
+  background: #e8f5f1;
+  color: #08745f;
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.profile-details {
+  padding: 15px;
+  margin: 20px 0;
+  border-radius: 12px;
+  background: #f8fafc;
+}
+
+.profile-details p {
+  margin: 10px 0;
+}
+
+.submit-button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+@media (max-width: 600px) {
+  .demo-section {
+    padding: 20px;
+  }
+
+  .demo-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .demo-card {
+    padding: 16px;
+  }
+}
