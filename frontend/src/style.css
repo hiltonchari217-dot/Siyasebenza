@@ -1,0 +1,179 @@
+
+:root {
+  font-family: Inter, system-ui, Arial, sans-serif;
+  color: #17251f;
+  background: #f3f6f3;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+}
+
+.page {
+  max-width: 1050px;
+  margin: 0 auto;
+  padding: 28px 22px;
+}
+
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 5px 25px;
+}
+
+.navbar h1 {
+  color: #164b39;
+  margin: 0;
+}
+
+.navbar p {
+  margin: 4px 0;
+  color: #68766e;
+}
+
+button {
+  cursor: pointer;
+}
+
+.nav-button,
+.submit-button {
+  background: #164b39;
+  color: white;
+  border: none;
+  padding: 13px 22px;
+  border-radius: 8px;
+  font-weight: 700;
+}
+
+.hero {
+  background: #164b39;
+  color: white;
+  padding: 48px;
+  border-radius: 18px;
+}
+
+.hero h2 {
+  font-size: clamp(2rem, 5vw, 3rem);
+  max-width: 650px;
+  margin: 15px 0;
+}
+
+.hero p {
+  line-height: 1.7;
+  max-width: 650px;
+}
+
+.eyebrow {
+  letter-spacing: .15em;
+  font-size: .75rem;
+  font-weight: 700;
+}
+
+.auth-panel,
+.panel {
+  background: white;
+  margin-top: 24px;
+  padding: 30px;
+  border-radius: 16px;
+  box-shadow: 0 8px 28px #183d2c12;
+}
+
+.auth-panel {
+  max-width: 520px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.auth-panel form {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-top: 24px;
+}
+
+.auth-panel label {
+  font-weight: 600;
+}
+
+.auth-panel input,
+.auth-panel select {
+  padding: 14px;
+  border: 1px solid #d4ded7;
+  border-radius: 8px;
+  font-size: 15px;
+  width: 100%;
+}
+
+.submit-button {
+  margin-top: 12px;
+  font-size: 16px;
+}
+
+.submit-button:hover,
+.nav-button:hover {
+  background: #237653;
+}
+
+.switch-text {
+  text-align: center;
+  margin-top: 24px;
+}
+
+.text-button {
+  background: none;
+  border: none;
+  color: #16834f;
+  font-weight: 700;
+  margin-left: 5px;
+}
+
+.status {
+  color: #28634d;
+  font-weight: 600;
+}
+
+.skills {
+  list-style: none;
+  padding: 0;
+  display: grid;
+  gap: 12px;
+}
+
+.skills li {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 16px;
+  background: #f3f6f3;
+  border-radius: 10px;
+}
+
+.skills span {
+  color: #53675d;
+}
+
+footer {
+  text-align: center;
+  color: #68766e;
+  padding: 28px;
+  font-size: .9rem;
+}
+
+@media (max-width: 520px) {
+  .hero {
+    padding: 28px;
+  }
+
+  .skills li {
+    flex-direction: column;
+  }
+
+  .navbar {
+    gap: 15px;
+  }
+}
