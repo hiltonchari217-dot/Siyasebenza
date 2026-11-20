@@ -9,12 +9,14 @@ type Skill = {
 
 type AccountType = "worker" | "customer" | "contractor" | "assessor";
 
-const API_URL =
-  import.meta.env.VITE_API_URL || "http://127.0.0.1:8000";
+const API_URL = (
+  import.meta.env.VITE_API_URL || "http://127.0.0.1:8000"
+).replace(/\/$/, "");
 
 export default function App() {
   const [skills, setSkills] = useState<Skill[]>([]);
   const [status, setStatus] = useState("Connecting to KasiSkill API...");
+  const [loading, setLoading] = useState(true);
 
   const [page, setPage] = useState<"login" | "register">("login");
   const [role, setRole] = useState<AccountType>("worker");
@@ -23,18 +25,50 @@ export default function App() {
   const [password, setPassword] = useState("");
 
   useEffect(() => {
-    fetch(`${API_URL}/api/skills`)
-      .then((response) => {
-        if (!response.ok) throw new Error("API request failed");
-        return response.json();
-      })
-      .then((data: Skill[]) => {
-        setSkills(data);
-        setStatus("Connected to KasiSkill");
-      })
-      .catch(() =>
-        setStatus("Could not connect. Start the backend and refresh.")
-      );
+    let cancelled = false;
+
+    async function loadSkills() {
+      try {
+        if (!API_URL) {
+          throw new Error("API URL is not configured.");
+        }
+
+        const response = await fetch(`${API_URL}/api/skills`);
+
+        if (!response.ok) {
+          throw new Error(`API returned status ${response.status}`);
+        }
+
+        const data: Skill[] = await response.json();
+
+        if (!Array.isArray(data)) {
+          throw new Error("Invalid skills response.");
+        }
+
+        if (!cancelled) {
+          setSkills(data);
+          setStatus("Connected to KasiSkill API successfully.");
+        }
+      } catch (error) {
+        console.error("KasiSkill API error:", error);
+
+        if (!cancelled) {
+          setStatus(
+            "Unable to connect to KasiSkill. Please try again later."
+          );
+        }
+      } finally {
+        if (!cancelled) {
+          setLoading(false);
+        }
+      }
+    }
+
+    loadSkills();
+
+    return () => {
+      cancelled = true;
+    };
   }, []);
 
   function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
@@ -42,10 +76,10 @@ export default function App() {
 
     alert(
       `${page === "login" ? "Login" : "Registration"} demonstration\n` +
-      `Name: ${name || "Not provided"}\n` +
-      `Email: ${email}\n` +
-      `Account type: ${role}\n\n` +
-      "Authentication will be connected to the backend in our next step."
+        `Name: ${name || "Not provided"}\n` +
+        `Email: ${email}\n` +
+        `Account type: ${role}\n\n` +
+        "Authentication is not implemented yet."
     );
   }
 
@@ -56,6 +90,7 @@ export default function App() {
           <h1>KasiSkill</h1>
           <p>Skills • Trust • Opportunity</p>
         </div>
+
         <button
           className="nav-button"
           onClick={() => setPage(page === "login" ? "register" : "login")}
@@ -77,6 +112,7 @@ export default function App() {
 
       <section className="auth-panel">
         <h2>{page === "login" ? "Welcome Back" : "Create Your Account"}</h2>
+
         <p>
           {page === "login"
             ? "Sign in to access your KasiSkill account."
@@ -136,12 +172,11 @@ export default function App() {
           {page === "login"
             ? "New to KasiSkill?"
             : "Already have an account?"}
+
           <button
             className="text-button"
             type="button"
-            onClick={() =>
-              setPage(page === "login" ? "register" : "login")
-            }
+            onClick={() => setPage(page === "login" ? "register" : "login")}
           >
             {page === "login" ? "Register here" : "Sign in here"}
           </button>
@@ -152,8 +187,10 @@ export default function App() {
         <h2>Explore Skills</h2>
         <p className="status">{status}</p>
 
-        {skills.length === 0 ? (
-          <p>Skills will appear here when the API is running.</p>
+        {loading ? (
+          <p>Loading skills...</p>
+        ) : skills.length === 0 ? (
+          <p>Skills are currently unavailable. Please try again later.</p>
         ) : (
           <ul className="skills">
             {skills.map((skill) => (
